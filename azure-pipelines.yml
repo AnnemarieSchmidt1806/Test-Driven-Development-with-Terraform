@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+  
+variables:
+  sshKey: 'vm-cloudwalker_key.pem' 
+
+stages:
+- stage: build
+  jobs:
+  - job: TerraformSetup 
+    displayName: 'Create Ressources with Terraform'
+    steps:
+    - script: 'echo "hello world"'
+      displayName: 'first'
+
+
+
