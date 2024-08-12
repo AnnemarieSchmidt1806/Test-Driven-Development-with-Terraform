@@ -15,19 +15,19 @@ stages:
     steps:
     - script: ls
       displayName: 'first'
-    - task: TerraformInstaller@1
+
+    - task: Terraform@2
       inputs:
-        terraformVersion: 'latest'
-
-
-
-    - task: AzureCLI@2
-      displayName: 'run terraform'
-      inputs:
-        azureSubscription: 'sp-terraform-Schulung'
-        scriptType: 'ps'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          terraform init -upgrade
-          terraform plan -out=terraform.tfplan
+        TemplatePath: 'main.tf'
+        Arguments: 'init'
+        PlanPath: 'main.tfplan'
+        InstallTerraform: true
+        UseAzureSub: true
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'sp-terraform-Schulung'
+        ManageState: true
+        SpecifyStorageAccount: true
+        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
+        StorageAccountRM: 'stacloudwalkerterraform'
+        StorageContainerName: 'c-cloudwalker-terraform'
 
