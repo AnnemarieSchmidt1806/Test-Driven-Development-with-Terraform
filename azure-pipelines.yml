@@ -19,7 +19,15 @@ stages:
       inputs:
         terraformVersion: 'latest'
 
-    - script: |
-        terraform init
-        terraform plan -out=terraform.tfplan
-      displayName: 'Terraform Plan'
+
+
+    - task: AzureCLI@2
+      displayName: 'run terraform'
+      inputs:
+        azureSubscription: 'sp-terraform-Schulung'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          terraform init -upgrade
+          terraform plan -out=terraform.tfplan
+
