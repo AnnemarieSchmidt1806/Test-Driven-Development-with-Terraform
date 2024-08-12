@@ -1,0 +1,33 @@
+trigger:
+- master
+
+pool:
+  vmImage: windows-latest
+  
+variables:
+  sshKey: 'vm-cloudwalker_key.pem' 
+
+stages:
+- stage: build
+  jobs:
+  - job: TerraformSetup 
+    displayName: 'Create Ressources with Terraform'
+    steps:
+    - script: ls
+      displayName: 'first'
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+
+
+
+    - task: AzureCLI@2
+      displayName: 'run terraform'
+      inputs:
+        azureSubscription: 'sp-terraform-Schulung'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          terraform init -upgrade
+          terraform plan -out=terraform.tfplan
+
