@@ -18,7 +18,7 @@ stages:
   - job: TerraformSetup 
     displayName: 'Create Ressources with Terraform'
     steps:
-    - script: 'echo "hello world"'
+    - script: ls
       displayName: 'first'
     - task: Terraform@2
       displayName: 'Terraform init'
