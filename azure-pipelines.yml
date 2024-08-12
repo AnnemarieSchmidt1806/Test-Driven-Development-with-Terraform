@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
@@ -20,52 +15,11 @@ stages:
     steps:
     - script: ls
       displayName: 'first'
-    - script: dir $(System.DefaultWorkingDirectory)
-      displayName: 'List files in working directory'
-    - script: cd \a\1\s
-      displayName: 'checkout'
-    - task: Terraform@2
-      displayName: 'Terraform init'
+    - task: TerraformInstaller@1
       inputs:
-        TemplatePath: '$(System.DefaultWorkingDirectory)/main.tf'
-        Arguments: 'init -update'
-        InstallTerraform: true
-        UseAzureSub: true
-        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-        ConnectedServiceNameARM: 'sp-terraform-Schulung'
-        ManageState: true
-        SpecifyStorageAccount: true
-        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
-        StorageAccountRM: 'stacloudwalkerterraform'
-        StorageContainerName: 'c-cloudwalker-terraform'
- 
-    - task: Terraform@2
-      displayName: 'Terraform plan'
-      inputs:
-        TemplatePath: 'main.tf'
-        Arguments: 'plan -out main.tfplan'
-        InstallTerraform: true
-        UseAzureSub: true
-        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-        ConnectedServiceNameARM: 'sp-terraform-Schulung'
-        ManageState: true
-        SpecifyStorageAccount: true
-        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
-        StorageAccountRM: 'stacloudwalkerterraform'
-        StorageContainerName: 'c-cloudwalker-terraform'
-    - task: Terraform@2
-      displayName: 'terraform apply'
-      inputs:
-        TemplatePath: 'main.tf'
-        Arguments: 'apply'
-        PlanPath: 'main.tfplan'
-        InstallTerraform: true
-        UseAzureSub: true
-        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-        ConnectedServiceNameARM: 'sp-terraform-Schulung'
-        ManageState: true
-        SpecifyStorageAccount: true
-        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
-        StorageAccountRM: 'stacloudwalkerterraform'
-        StorageContainerName: 'c-cloudwalker-terraform'
+        terraformVersion: 'latest'
 
+    - script: |
+        terraform init
+        terraform plan -out=terraform.tfplan
+      displayName: 'Terraform Plan'
