@@ -51,6 +51,12 @@ stages:
         backendAzureRmStorageAccountName: 'stacloudwalkerterraform'
         backendAzureRmContainerName: 'c-cloudwalker-terraform'
         backendAzureRmKey: 'prod.terraform.tfstate'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'sp-terraform-Schulung'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az login'
     - task: TerraformTaskV4@4
       displayName: 'terraform plan'
       inputs:
