@@ -8,26 +8,60 @@ variables:
   sshKey: 'vm-cloudwalker_key.pem' 
 
 stages:
-- stage: build
+- stage: tfvalidate
   jobs:
-  - job: TerraformSetup 
-    displayName: 'Create Ressources with Terraform'
+  - job: validate 
     steps:
-    - script: ls
-      displayName: 'first'
-
-    - task: Terraform@2
+    - task: TerraformInstaller@1
       inputs:
-        TemplatePath: 'main.tf'
-        Arguments: 'init'
-        PlanPath: 'main.tfplan'
-        InstallTerraform: true
-        UseAzureSub: true
-        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-        ConnectedServiceNameARM: 'sp-terraform-Schulung'
-        ManageState: true
-        SpecifyStorageAccount: true
-        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
-        StorageAccountRM: 'stacloudwalkerterraform'
-        StorageContainerName: 'c-cloudwalker-terraform'
-
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: 'terraform init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        commandOptions: '-upgrate'
+        backendServiceArm: 'sp-terraform-Schulung'
+        backendAzureRmResourceGroupName: 'rg-aschmidt-cloudwalker'
+        backendAzureRmStorageAccountName: 'stacloudwalkerterraform'
+        backendAzureRmContainerName: 'c-cloudwalker-terraform'
+        backendAzureRmKey: 'prod.terraform.tfstate'
+    - task: TerraformTaskV4@4
+      displayName: 'terraform validate'
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+- stage: tfdeploy
+  condition: succeeded('tfvalidate')
+  dependsOn: tfvalidate
+  jobs:
+  - job: apply
+    steps:
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: 'terraform init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        commandOptions: '-upgrate'
+        backendServiceArm: 'sp-terraform-Schulung'
+        backendAzureRmResourceGroupName: 'rg-aschmidt-cloudwalker'
+        backendAzureRmStorageAccountName: 'stacloudwalkerterraform'
+        backendAzureRmContainerName: 'c-cloudwalker-terraform'
+        backendAzureRmKey: 'prod.terraform.tfstate'
+    - task: TerraformTaskV4@4
+      displayName: 'terraform plan'
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        commandOptions: '-out main.tfplan'
+        environmentServiceNameAzureRM: 'sp-terraform-Schulung'
+    - task: TerraformTaskV4@4
+      displayName: 'terraform apply'
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        commandOptions: 'main.tfplan'
+        environmentServiceNameAzureRM: 'sp-terraform-Schulung'
