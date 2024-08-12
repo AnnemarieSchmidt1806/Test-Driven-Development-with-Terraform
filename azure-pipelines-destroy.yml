@@ -8,8 +8,6 @@ variables:
 
 stages:
 - stage: tfdestroy
-  condition: succeeded('tfvalidate')
-  dependsOn: tfvalidate
   jobs:
   - job: destroy
     steps:
