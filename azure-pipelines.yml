@@ -23,7 +23,7 @@ stages:
     - task: Terraform@2
       displayName: 'Terraform init'
       inputs:
-        TemplatePath: './main.tf'
+        TemplatePath: '$(System.DefaultWorkingDirectory)/main.tf'
         Arguments: 'init -update'
         InstallTerraform: true
         UseAzureSub: true
