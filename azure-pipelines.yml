@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
   
 variables:
   sshKey: 'vm-cloudwalker_key.pem' 
@@ -20,7 +20,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        commandOptions: '-upgrate'
+        commandOptions: '-upgrade'
         backendServiceArm: 'sp-terraform-Schulung'
         backendAzureRmResourceGroupName: 'rg-aschmidt-cloudwalker'
         backendAzureRmStorageAccountName: 'stacloudwalkerterraform'
