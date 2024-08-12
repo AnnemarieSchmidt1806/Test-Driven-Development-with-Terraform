@@ -20,19 +20,47 @@ stages:
     steps:
     - script: 'echo "hello world"'
       displayName: 'first'
-#    - task: Terraform@2
- #     inputs:
-  #      TemplatePath: 'main.tf'
-   #     Arguments: 'init -update'
-    #    InstallTerraform: true
-     #   UseAzureSub: true
-      #  ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-       # ConnectedServiceNameARM: 'sp-terraform-Schulung'
-        #ManageState: true
-#        SpecifyStorageAccount: true
- #       StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
-  #      StorageAccountRM: 'stacloudwalkerterraform'
-   #     StorageContainerName: 'c-cloudwalker-terraform'
-
-
+    - task: Terraform@2
+      displayName: 'Terraform init'
+      inputs:
+        TemplatePath: 'main.tf'
+        Arguments: 'init -update'
+        InstallTerraform: true
+        UseAzureSub: true
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'sp-terraform-Schulung'
+        ManageState: true
+        SpecifyStorageAccount: true
+        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
+        StorageAccountRM: 'stacloudwalkerterraform'
+        StorageContainerName: 'c-cloudwalker-terraform'
+    - task: Terraform@2
+      displayName: 'Terraform plan'
+      inputs:
+        TemplatePath: 'main.tf'
+        Arguments: 'plan -out main.tfplan'
+        InstallTerraform: true
+        UseAzureSub: true
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'sp-terraform-Schulung'
+        ManageState: true
+        SpecifyStorageAccount: true
+        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
+        StorageAccountRM: 'stacloudwalkerterraform'
+        StorageContainerName: 'c-cloudwalker-terraform'
+    - task: Terraform@2
+      displayName: 'terraform apply'
+      inputs:
+        TemplatePath: 'main.tf'
+        Arguments: 'apply'
+        PlanPath: 'main.tfplan'
+        InstallTerraform: true
+        UseAzureSub: true
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'sp-terraform-Schulung'
+        ManageState: true
+        SpecifyStorageAccount: true
+        StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
+        StorageAccountRM: 'stacloudwalkerterraform'
+        StorageContainerName: 'c-cloudwalker-terraform'
 
