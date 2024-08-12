@@ -20,6 +20,10 @@ stages:
     steps:
     - script: ls
       displayName: 'first'
+    - script: dir $(System.DefaultWorkingDirectory)
+      displayName: 'List files in working directory'
+    - script: cd \a\1\s
+      displayName: 'checkout'
     - task: Terraform@2
       displayName: 'Terraform init'
       inputs:
@@ -34,6 +38,7 @@ stages:
         StorageAccountResourceGroup: 'rg-aschmidt-cloudwalker'
         StorageAccountRM: 'stacloudwalkerterraform'
         StorageContainerName: 'c-cloudwalker-terraform'
+ 
     - task: Terraform@2
       displayName: 'Terraform plan'
       inputs:
