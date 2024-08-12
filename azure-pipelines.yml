@@ -56,7 +56,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'plan'
-        commandOptions: 
+        commandOptions: -out main.tfplan
         environmentServiceNameAzureRM: 'sp-terraform-Schulung'
     - task: TerraformTaskV4@4
       displayName: 'terraform apply'
