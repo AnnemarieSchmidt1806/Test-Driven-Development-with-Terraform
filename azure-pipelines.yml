@@ -64,3 +64,33 @@ stages:
         command: 'apply'
         commandOptions: 'main.tfplan'
         environmentServiceNameAzureRM: 'sp-terraform-Schulung'
+    - script: terraform output key_data
+      displayName: 'print ssh key_data'
+
+  - stage: deploy
+  jobs:
+  - deployment: DeployWeb
+    displayName: 'Deploy on VM'
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 
+      name: 'environment-aschmidt-cloudwalker'
+      resourceName: vm-cloudwalker
+      resourceType: virtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+        # den SSH-Schlüssel herunterladen
+          - task: DownloadSecureFile@1
+            name: sshKey
+            inputs:
+              secureFile: $(sshKey)
+          - script: |
+              mkdir -p $(Agent.TempDirectory)/.ssh
+              cp $(sshKey.secureFilePath) $(Agent.TempDirectory)/.ssh/vm-cloudwalker_key.pem
+              chmod 600 $(Agent.TempDirectory)/.ssh/vm-cloudwalker_key.pem
+            displayName: 'setup ssh-key'
+          # Pipeline artifact auf Azure VM kopieren
+          - script: scp -i $(Agent.TempDirectory)/.ssh/vm-cloudwalker_key.pem -r $(Pipeline.Workspace)/Test-Driven-Development/s/* azureuser@4.184.201.242:cloudwalker/goat-book
+            displayName: 'copy repository to azure vm'
