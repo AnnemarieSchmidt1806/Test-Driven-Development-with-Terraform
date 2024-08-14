@@ -27,6 +27,13 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'validate'
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)'
+        artifact: 'Test-Driven-Development'
+        publishLocation: 'pipeline'
+        
 - stage: tfdeploy
   condition: succeeded('tfvalidate')
   dependsOn: tfvalidate
@@ -76,9 +83,14 @@ stages:
       runOnce:
         deploy:
           steps:
+
           - task: CopyFilesOverSSH@0
             displayName: 'copy files to vm'
             inputs:
               sshEndpoint: 'connection-vm-cloudwalker-terraform'
-              contents: '**'
+              sourceFolder: 'cloudwalker'
+              contents: |
+                $(Pipeline.Workspace)/Test-Driven-Development/s/src
+                $(Pipeline.Workspace)/Test-Driven-Development/s/Dockerfile
+                $(Pipeline.Workspace)/Test-Driven-Development/s/requirements.txt
               readyTimeout: '20000'
