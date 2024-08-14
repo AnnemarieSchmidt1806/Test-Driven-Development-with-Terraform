@@ -36,9 +36,9 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: |
-          Dockerfile
-          requirements.txt
-          src
+          $(System.DefaultWorkingDirectory)/Dockerfile
+          $(System.DefaultWorkingDirectory)/requirements.txt
+          $(System.DefaultWorkingDirectory)/src
         artifact: 'Test-Driven-Development'
         publishLocation: 'pipeline'
 
