@@ -31,9 +31,9 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: |
-          $(Pipeline.Workspace)/Dockerfile
-          $(Pipeline.Workspace)/requirements.txt
-          $(Pipeline.Workspace)/src
+          $(System.DefaultWorkingDirectory)/Dockerfile
+          $(System.DefaultWorkingDirectory)/requirements.txt
+          $(System.DefaultWorkingDirectory)/src
         artifact: 'Test-Driven-Development'
         publishLocation: 'pipeline'
 
