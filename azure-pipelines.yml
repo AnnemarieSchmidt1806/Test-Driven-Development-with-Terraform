@@ -27,18 +27,13 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'validate'
-    - script: ls $(Pipeline.Workspace)
-      displayName: 'get workspace'
-    - script: ls 
-      displayName: 'ls'
+
     - script: ls $(System.DefaultWorkingDirectory)
       displayName: 'workingdirectory'
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: |
-          $(System.DefaultWorkingDirectory)/Dockerfile
-          $(System.DefaultWorkingDirectory)/requirements.txt
-          $(System.DefaultWorkingDirectory)/src
+        targetPath: $(System.DefaultWorkingDirectory)/src
+
         artifact: 'Test-Driven-Development'
         publishLocation: 'pipeline'
 
