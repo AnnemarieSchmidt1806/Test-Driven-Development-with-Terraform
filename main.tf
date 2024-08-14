@@ -112,7 +112,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
 
   admin_ssh_key {
     username   = var.username
-    public_key = azapi_resource_action.ssh_public_key_gen.output.publicKey
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCueJ7xmB4ni8COeSkQt+mO2CPAB4MwMNj2rQN1aMKPJBIPrZnuJylMsqY/SZPhR/lH5E9knHTRDp+IuVDIEKkOVWRTEiyFXnT/Y3axNWEOmxrbdg7sUyKxe3YWfWxsc9X9e7nJ9+FUCJzsuHINiqs7NRPpTkwG7+pV08DCleFJ6G3cCQKT41stmB4YTbXaR421QY0HWINhLMaBhE+0bxgq6jnw8iHadCNkSUfvCcj9W7DmUQKX33QBBdZ5ss4VHJ2wsLieRIWHKFLgp3QZZJuXfd+Im2C3ZrKRl29nuaVQtuQ3Pl4nwBoidS6vpZP5C4B38yJn/cIC2SwFFtndSH+wdbIAwFLI80gUY8iubfn7X9szf/coFJEgkV/b3dS5+DgQBWJ1VqHEy4sl8wTWVJVFntE0s37BV9cXjOw/9pASuZlaCXHEOvfSyfceMSxhU6ADl3xk/qZiI8ntJ37DznEySGpp2t/RSf1H/OBexcEo5hd4rV6FspQg4eH+NS9GoLp+ycJmf6Dy9gNT71DAN/4WBi0+i7QpdAsvCBCNQ8UAIxZ1EmNJJFgspSdesusmWUMaoME/o/o3vR5pcIvTVagTiuysd735EjjAbZussSRs/M5N7A9ZAI5LbF/bSKuwKozXIHeC0C6ERsZHeeszZ12HeSZsIzG3mLGvzNOF3VCQhQ== azureadmin@4.184.214.13"
   }
 
   boot_diagnostics {
