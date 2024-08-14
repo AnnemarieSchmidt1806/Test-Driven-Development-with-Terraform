@@ -42,9 +42,15 @@ stages:
       inputs:
         targetPath: |
           $(System.DefaultWorkingDirectory)/requirements.txt
-        artifact: 'Test-Driven-Development'
+        artifact: 'Test-Driven-Development2'
         publishLocation: 'pipeline'
-
+    - task: PublishPipelineArtifact@1
+      displayName: 'publish artifact Dockerfile'
+      inputs:
+        targetPath: |
+          $(System.DefaultWorkingDirectory)/Dockerfile
+        artifact: 'Test-Driven-Development3'
+        publishLocation: 'pipeline'
 
         
 - stage: tfdeploy
