@@ -31,8 +31,12 @@ stages:
     - script: ls $(System.DefaultWorkingDirectory)
       displayName: 'workingdirectory'
     - task: PublishPipelineArtifact@1
+      displayName: 'publish artifacts'
       inputs:
-        targetPath: $(System.DefaultWorkingDirectory)/src
+        targetPath: |
+          $(System.DefaultWorkingDirectory)/src
+          $(System.DefaultWorkingDirectory)/requirements.txt
+          $(System.DefaultWorkingDirectory)/Dockerfile
 
         artifact: 'Test-Driven-Development'
         publishLocation: 'pipeline'
