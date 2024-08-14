@@ -30,9 +30,14 @@ stages:
     
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Pipeline.Workspace)'
+        targetPath: |
+          $(Pipeline.Workspace)/Dockerfile
+          $(Pipeline.Workspace)/requirements.txt
+          $(Pipeline.Workspace)/src
         artifact: 'Test-Driven-Development'
         publishLocation: 'pipeline'
+
+
         
 - stage: tfdeploy
   condition: succeeded('tfvalidate')
@@ -89,8 +94,5 @@ stages:
             inputs:
               sshEndpoint: 'connection-vm-cloudwalker-terraform'
               sourceFolder: 'cloudwalker'
-              contents: |
-                $(Pipeline.Workspace)/Test-Driven-Development/s/src
-                $(Pipeline.Workspace)/Test-Driven-Development/s/Dockerfile
-                $(Pipeline.Workspace)/Test-Driven-Development/s/requirements.txt
+              contents: $(Pipeline.Workspace)/Test-Driven-Development/s/*
               readyTimeout: '20000'
