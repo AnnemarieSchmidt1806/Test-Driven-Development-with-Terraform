@@ -30,7 +30,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'plan'
-        commandOptions: -destroy -out main.destroy.tfplan
+        commandOptions: -destroy -out main.destroy.tfplan -lock=false
         environmentServiceNameAzureRM: 'sp-terraform-Schulung'
     - task: TerraformTaskV4@4
       displayName: 'terraform apply'
