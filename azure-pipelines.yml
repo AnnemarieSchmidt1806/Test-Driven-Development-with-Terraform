@@ -94,6 +94,6 @@ stages:
               sourceFolder: '$(Build.SourcesDirectory)'
               targetFolder: home/azureadmin/cloudwalker
               contents: $(Pipeline.Workspace)/Test-Driven-Development/s/*
-              readyTimeout: '20000'
+              readyTimeout: '60000'
               overwrite: true
               
