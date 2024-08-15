@@ -1,3 +1,4 @@
+
 trigger: none
 
 pool:
@@ -30,12 +31,12 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'plan'
-        commandOptions: -destroy -out main.destroy.tfplan -lock=false
+        commandOptions: -destroy -out main.destroy.tfplan
         environmentServiceNameAzureRM: 'sp-terraform-Schulung'
     - task: TerraformTaskV4@4
       displayName: 'terraform apply'
       inputs:
         provider: 'azurerm'
         command: 'apply'
-        commandOptions: '-lock=false main.destroy.tfplan'
+        commandOptions: 'main.destroy.tfplan'
         environmentServiceNameAzureRM: 'sp-terraform-Schulung'
