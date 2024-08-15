@@ -101,6 +101,6 @@ stages:
               chmod 600 $(Agent.TempDirectory)/.ssh/$(sshKey)
             displayName: 'setup ssh-key'
           # Pipeline artifact auf Azure VM kopieren
-          - script: scp -i $(Agent.TempDirectory)/.ssh/$(sshKey) -r $(Pipeline.Workspace)/Test-Driven-Development/s/* azureuser@4.184.201.242:cloudwalker
+          - script: scp -i $(Agent.TempDirectory)/.ssh/$(sshKey) -r $(Pipeline.Workspace)/Test-Driven-Development/s/* azureuser@4.184.221.214:cloudwalker
             displayName: 'copy repository to azure vm'
               
