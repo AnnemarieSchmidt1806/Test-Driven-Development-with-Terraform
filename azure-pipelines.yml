@@ -91,6 +91,8 @@ stages:
             displayName: 'copy files to vm'
             inputs:
               sshEndpoint: 'connection-vm-cloudwalker-terraform'
-              sourceFolder: '~/cloudwalker'
+              sourceFolder: '~/home/azureadmin/cloudwalker'
               contents: $(Pipeline.Workspace)/Test-Driven-Development/s/*
               readyTimeout: '20000'
+              overwrite: true
+              
