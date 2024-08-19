@@ -86,10 +86,7 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: 'ls $(Pipeline.Workspace)'
-            displayName: "checkout  pipeline workspace"
-          - script: 'ls $(Build.SourceDirectory)'
-            displayName: 'checkout build directory'
+       
 
           - task: CopyFilesOverSSH@0
             displayName: copy files to vm
