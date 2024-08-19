@@ -3,9 +3,6 @@ trigger: none
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  sshKey : 'cw-terraform'
-
 stages:
 - stage: tfvalidate
   jobs:
@@ -89,18 +86,12 @@ stages:
       runOnce:
         deploy:
           steps:
-
-# den SSH-Schlüssel herunterladen
-          - task: DownloadSecureFile@1
-            name: sshKey
+          - task: CopyFilesOverSSH@0
+            displayName: copy files to vm
             inputs:
-              secureFile: $(sshKey)
-          - script: |
-              mkdir -p $(Agent.TempDirectory)/.ssh
-              cp $(sshKey.secureFilePath) $(Agent.TempDirectory)/.ssh/$(sshKey)
-              chmod 600 $(Agent.TempDirectory)/.ssh/$(sshKey)
-            displayName: 'setup ssh-key'
-          # Pipeline artifact auf Azure VM kopieren
-          - script: scp -i $(Agent.TempDirectory)/.ssh/$(sshKey) -r $(Pipeline.Workspace)/Test-Driven-Development/s/* azureuser@4.184.221.214:cloudwalker
-            displayName: 'copy repository to azure vm'
+              sshEndpoint: 'connection-vm-cloudwalker-terraform'
+              sourceFolder: 'cloudwalker'
+              contents: '$(Pipeline.Workspace)Test-Driven-Development/goat-book'
+              targetFolder: 'Test-Driven-Development/goat-book'
+              readyTimeout: '20000'
               
