@@ -96,3 +96,4 @@ stages:
               contents: '**/*'
               targetFolder: 'cloudwalker'
               readyTimeout: '20000'
+              overwrite: true
