@@ -93,6 +93,6 @@ stages:
             inputs:
               sshEndpoint: 'connection-vm-cloudwalker-terraform'
               sourceFolder: '$(System.DefaultWorkingDirectory)'
-              contents: 'Test-Driven-Development'
+              contents: '**/Test-Driven-Development'
               targetFolder: 'cloudwalker'
               readyTimeout: '20000'
