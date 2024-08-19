@@ -92,7 +92,7 @@ stages:
             displayName: copy files to vm
             inputs:
               sshEndpoint: 'connection-vm-cloudwalker-terraform'
-              sourceFolder: '$(System.DefaultWorkingDirectory)'
-              contents: '**/Test-Driven-Development'
+              sourceFolder: '$(Pipeline.Workspace)/Test-Driven-Development'
+              contents: '**/*'
               targetFolder: 'cloudwalker'
               readyTimeout: '20000'
