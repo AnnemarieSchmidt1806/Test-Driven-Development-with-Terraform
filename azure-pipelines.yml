@@ -93,6 +93,6 @@ stages:
             inputs:
               sshEndpoint: 'connection-vm-cloudwalker-terraform'
               sourceFolder: '$(System.DefaultWorkingDirectory)'
-              contents: '$(Pipeline.Workspace)/Test-Driven-Development'
+              contents: '**'
               targetFolder: 'home/azureadmin/cloudwalker'
               readyTimeout: '20000'
